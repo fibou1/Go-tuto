@@ -46,3 +46,17 @@ pour aider les autres étudiants à progresser.
 2. **Crée une nouvelle branche** pour ton contenu :
    ```bash
    git checkout -b contenu-ton-nom
+
+3. **Le contenu doit être en Markdown (.md)**
+
+Tous les fichiers éducatifs doivent être écrits au format Markdown
+pour être facilement lisibles sur GitHub.
+
+
+ 4. **Structure conseillée pour vos fichiers**
+###### 🎓 Titre du cours ou TP
+###### 🎯 Objectif
+###### 📘 Explications simples
+###### 💡 Exemple de code
+###### 🧪 Mini exercice
+###### ✅ Résumé / Points clés
