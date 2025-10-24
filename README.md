@@ -7,7 +7,7 @@
 <div style="background-color:#f5f5f5; border-left:6px solid #3498db; padding:12px;">
 
 <b>💡 Le contenu du cours n’est pas uniquement dans la branche <code>main</code>.</b>  
-Chaque branche contient une partie différente du projet ou du cours Go.
+Chaque branche contient une partie différente 
 
 </div>
 
