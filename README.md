@@ -36,25 +36,18 @@ GoQuiz/
          │  1️⃣ Affiche le menu       │
          │  2️⃣ Lis le choix          │
          │  3️⃣ Appelle le bon quiz   │
-         └───────┬─────────┬──────────┘
-                 │         │
-     ┌───────────┘         └───────────┐
-     ▼                                 ▼
-┌──────────────────────┐ ┌──────────────────────┐
-│ quizinfo.go │ │ quizcyber.go │
-│ fonction : │ │ fonction : │
-│ StartQuizInfo() │ │ StartQuizCyber() │
-│ │ │ │
-│ → Pose les questions │ │ → Pose les questions│
-│ → Vérifie réponses │ │ → Vérifie réponses │
-│ → Calcule score │ │ → Calcule score │
-└──────────┬────────────┘ └──────────┬───────────┘
-
-                    │ │
-                    ▼ ▼
-    ┌──────────────────────────────┐ ┌──────────────────────────────┐
-
-    │ quizIAdata.go │ │ (bonus futur : scores.txt) │
-    │ fonction : StartQuizIAData() │ │ Sauvegarder les scores │
-    │ Pose questions sur IA/Data │ │ et niveaux joueurs │
-    └──────────────────────────────┘ └──────────────────────────────┘
+         └───────┬─────────┬───────┬─┘
+                 │         │       │
+     ┌───────────┘         └────┐  └────────────────────────────┐
+     ▼                          ▼                               ▼
+┌──────────────────────┐    ┌──────────────────────┐    ┌──────────────────────┐ 
+│    quizinfo.go       │    │     quizcyber.go     │    │    quizIAdata.go     │
+│                      │    │                      │    │                      │
+│                      │    │                      │    │                      │
+│                      │    │                      │    │                      │
+│                      │    │                      │    │                      │
+│                      │    │                      │    │                      │
+│                      │    │                      │    │                      │
+│                      │    │                      │    │                      │
+│                      │    │                      │    │                      │
+└──────────────────────┘    └──────────────────────┘    └──────────────────────┘
