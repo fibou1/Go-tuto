@@ -8,7 +8,6 @@ func StartQuizInfo() {
 
 	totalQuestions := 3
 	score := 0
-
 	// Question 1
 	fmt.Println("Quel est le système d’exploitation libre le plus utilisé ?")
 	fmt.Println("1. Windows")
@@ -17,7 +16,6 @@ func StartQuizInfo() {
 	if CheckAnswer(3) {
 		score++
 	}
-
 	// Question 2
 	fmt.Println("Quel langage est compilé ?")
 	fmt.Println("1. Python")
@@ -26,7 +24,6 @@ func StartQuizInfo() {
 	if CheckAnswer(2) {
 		score++
 	}
-
 	// Question 3
 	fmt.Println("Que signifie HTML ?")
 	fmt.Println("1. HyperText Markup Language")
@@ -35,9 +32,7 @@ func StartQuizInfo() {
 	if CheckAnswer(1) {
 		score++
 	}
-
 	CalculateScore(score, totalQuestions)
-
 }
 
 func CheckAnswer(correctAnswer int) bool {
