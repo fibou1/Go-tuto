@@ -67,7 +67,7 @@ Faire comprendre aux étudiants que :
 
 ---
 
-# 🧩 1️⃣ LES ACTIONS — "Quand le sprite bouge"
+## 🧩 1️⃣ LES ACTIONS — "Quand le sprite bouge"
 
 ### 🧠 En Scratch :
 > Quand on clique sur le drapeau vert → le chat avance de 10 pas.
@@ -88,7 +88,7 @@ func main() {
 
 ---
 
-# 🔁 2️⃣ LES BOUCLES 
+## 🔁 2️⃣ LES BOUCLES 
 
 ### 🧠 En Scratch :
 controle => Répéter 10 fois : { avancer de 10 pas }
@@ -111,7 +111,7 @@ func main() {
 
 ---
 
-# ❓ 3️⃣ LES CONDITIONS — "Si touche le bord, rebondir"
+## ❓ 3️⃣ LES CONDITIONS — "Si touche le bord, rebondir"
 
 ### 🧠 En Scratch :
 > Si le chat touche le bord  
@@ -142,7 +142,7 @@ func main() {
 
 ---
 
-# 📦 4️⃣ LES VARIABLES — "Mettre une valeur dans une boîte"
+## 📦 4️⃣ LES VARIABLES — "Mettre une valeur dans une boîte"
 
 ### 🧠 En Scratch :
 > Mettre **score à 0**  
@@ -167,7 +167,7 @@ func main() {
 
 ---
 
-# ⚙️ 5️⃣ LES FONCTIONS — "Créer ton propre bloc"
+## ⚙️ 5️⃣ LES FONCTIONS — "Créer ton propre bloc"
 
 ### 🧠 En Scratch :
 > Créer un bloc “saluer joueur”
@@ -194,7 +194,7 @@ func main() {
 
 ---
 
-# 🧩 6️⃣ LES ÉVÉNEMENTS — "Quand on clique sur le drapeau vert"
+## 🧩 6️⃣ LES ÉVÉNEMENTS — "Quand on clique sur le drapeau vert"
 
 En Go, il n’y a pas d’événement visuel (comme clic ou touche pressée),
 mais on peut simuler une **interaction avec le clavier** 👇
@@ -224,7 +224,7 @@ func main() {
 
 ---
 
-# 🎮 7️⃣ TP — **Créer ton mini-jeu Scratch en Go !**
+## 🎮 7️⃣ TP — **Créer ton mini-jeu Scratch en Go !**
 
 ### 🎯 Objectif :
 Recréer la logique d’un petit jeu Scratch… mais en Go.
