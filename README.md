@@ -29,6 +29,7 @@ GoQuiz/
 ```text
 ┌───────────────────────────┐
 │         main.go           │
+│       ShowMenu()          │
 │  (point d'entrée du jeu)  │
 └─────────────┬─────────────┘
               │
