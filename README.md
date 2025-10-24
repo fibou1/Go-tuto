@@ -17,6 +17,6 @@ Chaque branche contient une partie différente du projet ou du cours Go.
 
 1. En haut à gauche sur GitHub, cliquez sur le menu déroulant <b><code>main ▼</code></b>  
 2. Sélectionnez la branche correspondant au sujet qui vous intéresse :
-   - <code>goquiz</code> → Projet Quiz Console
-   - <code>exemples-struct</code> → Structures & Instances
-   - <code>exos-b1</code> → Exerc
+   - <code>etape_1</code> → Projet Quiz Console
+   - <code>les_base</code> → les bases de Golang + ex
+  
