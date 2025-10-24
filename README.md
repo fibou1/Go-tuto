@@ -49,10 +49,12 @@ GoQuiz/
 │ → Vérifie réponses │ │ → Vérifie réponses │
 │ → Calcule score │ │ → Calcule score │
 └──────────┬────────────┘ └──────────┬───────────┘
-│ │
-▼ ▼
-┌──────────────────────────────┐ ┌──────────────────────────────┐
-│ quizIAdata.go │ │ (bonus futur : scores.txt) │
-│ fonction : StartQuizIAData() │ │ Sauvegarder les scores │
-│ Pose questions sur IA/Data │ │ et niveaux joueurs │
-└──────────────────────────────┘ └──────────────────────────────┘
+
+                    │ │
+                    ▼ ▼
+    ┌──────────────────────────────┐ ┌──────────────────────────────┐
+
+    │ quizIAdata.go │ │ (bonus futur : scores.txt) │
+    │ fonction : StartQuizIAData() │ │ Sauvegarder les scores │
+    │ Pose questions sur IA/Data │ │ et niveaux joueurs │
+    └──────────────────────────────┘ └──────────────────────────────┘
