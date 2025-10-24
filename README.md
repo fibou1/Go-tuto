@@ -1,6 +1,6 @@
 ---
 
-<h2 align="center" style="color:#2C3E50;">⚠️ Vérifiez les branches du dépôt</h2>
+<h2 align="center" style="color:#007ffd;">⚠️ Vérifiez les branches du dépôt</h2>
 
 ---
 
