@@ -58,5 +58,5 @@ https://www.youtube.com/watch?v=d8fXEhWy_rY&t=232s
 ###### 🎯 Objectif
 ###### 📘 Explications simples
 ###### 💡 Exemple de code
-###### 🧪 Mini exercice
 ###### ✅ Résumé / Points clés
+###### Mini exercice + correction
