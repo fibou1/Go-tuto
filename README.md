@@ -277,3 +277,4 @@ func main() {
 | Créer un bloc | `func` | Faire une fonction réutilisable |
 | Quand drapeau vert cliqué | `main()` | Démarrage du programme |
 | Lire entrée | `fmt.Scan()` | Interaction clavier |
+https://www.youtube.com/watch?v=t8b9f5M9yoY

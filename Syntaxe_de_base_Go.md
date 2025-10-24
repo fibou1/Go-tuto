@@ -324,3 +324,4 @@ func Bonjour(nom string) string {
 > 💡 **En un mot :**  
 > Le langage Go est comme Scratch, mais sans les blocs :  
 > tu dis à la machine **quoi faire**, **dans quel ordre**, et **avec quelles règles**.
+https://www.youtube.com/watch?v=t8b9f5M9yoY
