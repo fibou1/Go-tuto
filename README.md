@@ -51,7 +51,7 @@ pour aider les autres étudiants à progresser.
 
 Tous les fichiers éducatifs doivent être écrits au format Markdown
 pour être facilement lisibles sur GitHub.
-
+https://www.youtube.com/watch?v=d8fXEhWy_rY&t=232s
 
  4. **Structure conseillée pour vos fichiers**
 ###### 🎓 Titre du cours ou TP
