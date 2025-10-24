@@ -9,6 +9,7 @@ Le jeu pose des questions à l’utilisateur, vérifie les réponses et affiche 
 
 ## 🗂️ Structure du projet
 
+```text
 GoQuiz/
 │
 ├── main.go → point d’entrée du programme
@@ -18,7 +19,7 @@ GoQuiz/
 ├── quizIAdata.go → quiz sur la data et l’IA
 ├── go.mod → module Go (nom du projet)
 ├── README.md → documentation du projet
-
+```
 ---
 
 ##  Logique du programme (vue d’ensemble)
