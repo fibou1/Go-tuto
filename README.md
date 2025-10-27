@@ -1,349 +1,166 @@
-# Les liens entre Go et le HTML
-
-Le HTML peut contenir des **balises spéciales Go** que l’on peut utiliser directement dans le code HTML.
-
-Ces balises sont entourées de doubles accolades : `{{ }}`.
-
-Elles permettent :
-
-* d’afficher des données provenant d’un serveur back-end Go directement dans le HTML ;
-* de créer des conditions ou des boucles selon l’état des variables Go. Ces instructions se terminent toujours par `{{end}}`.
+# 📦 Workflow Git complet — Branche de fonctionnalité
+> Proposé par Emrick Rivet - B1 Info - Octobre 2025
 
 ---
 
-### Exemple :
-
-```html
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ .Title }}</title>
-</head>
-<body>
-    {{ .Message }}
-    {{if eq .Nb_visiteurs 5}}
-        <p>Il y a 5 visiteurs sur le site !</p>
-    {{end}}
-</body>
-</html>
-```
-
-> Le HTML affiche la valeur de la variable Go *Title* dans le titre de l’onglet et *Message* dans le corps de la page.
-> Il n’affiche la balise `<p>` que lorsque la variable Go *Nb_visiteurs* est égale à **5**.
+## Objectif
+Ce guide détaille un workflow Git complet pour travailler avec des branches de fonctionnalité. Il couvre la création, le travail, et la fusion de branches dans le cadre d'un projet collaboratif.
 
 ---
 
-## Objectifs
+## 🧩 1. Création de la branche ou cloner une branche d'un distant
 
-Dans ce cours, nous allons détailler comment **envoyer des données Go (variables)** vers le HTML afin de les afficher directement sur le site.
+### Créer une branche: 
+* 1️⃣ Se placer sur la branche principale
+    ```git
+	git checkout main  
+    ```    
+    > Pour être sûr d'être sur la branche main
 
----
+    ```git
+     git pull origin main  
+    ```
+    > récupérer les dernières mises à jour du main sur le dépôt distant
 
-## Comprendre l’initialisation d’une page HTML via Go
+* 2️⃣ Créer une branche pour une nouvelle fonctionnalité
+    ```git
+	git checkout -b nom_de_branche  
+    ```
+    > -b permet de créer la branche en même temps du checkout
 
-Au lancement de la page HTML `"/contact"`, le serveur va :
-
-* Appeler la fonction Go **Contact** du package *controller* (situé dans un fichier séparé) ;
-* Initialiser une requête HTTP (souvent de méthode **GET**) envoyée à cette fonction, afin de récupérer et afficher les données sur la page.
-
-Une page HTML est initialisée via la fonction Go suivante :
-
-```go
-package router
-
-import (
-	"net/http"
-	"controller"
-)
-
-// New crée et retourne un nouvel objet ServeMux configuré avec les routes de l'application
-func New() *http.ServeMux {
-	mux := http.NewServeMux()
-
-	// Routes du site
-	mux.HandleFunc("/", controller.Home)
-	mux.HandleFunc("/contact", controller.Contact)
-
-	return mux
-}
-```
-
-Fonction *Contact* :
-
-```go
-package controller
-
-import (
-	"html/template"
-	"net/http"
-)
-
-func Contact(w http.ResponseWriter, r *http.Request) {
-	if r.Method == http.MethodPost {
-		// Traitement du formulaire POST
-	}
-
-	// Si ce n'est pas un POST, on affiche simplement le formulaire
-	data := map[string]string{
-		"Title":   "Contact",
-		"Message": "Envoie-nous un message 📩",
-	}
-	tmpl := template.Must(template.ParseFiles("template/contact.html"))
-	tmpl.Execute(w, data)
-}
-```
+    * Exemple : 
+    ```git
+    git checkout -b feature/nom-de-fonctionnalité
+    ```
 
 ---
 
-## Comprendre l'envoi et la réception d'un formulaire HTML vers Go
+### Cloner une branche après avoir cloner un repositoire GitHub:
+* 1️⃣ Regarder les branche disponibles sur le distant:
+    ```git
+	git branch -a 
+    ```	
+    > En rouge les branches disponibles sur le distant
+	
+    * Exemple de résultat : 
+    remotes/origin/feature/les_bases 	
+    > Ici on a une branche "feature/les_bases" sur le distant
+			
+* 2️⃣ Cloner la branche dans son local:
+    ```git
+	git checkout nom_de_branche 
+    ```	
+    > On se déplace automatiquement dans la branche
 
-### HTML vers Go
-
-Pour communiquer du HTML vers Go, le serveur utilise des **requêtes HTTP**, sous deux formes :
-
-* **Méthode GET**
-
-  > Lors du lancement du serveur, la page initialise une requête pour récupérer le contenu et l’afficher à l’utilisateur.
-
-* **Méthode POST**
-
-  > Avec une balise `<form>`, l’utilisateur peut envoyer des données (texte, choix, etc.) au serveur via un bouton d’envoi.
-
-Exemple de formulaire HTML :
-
-```html
-<form method="post" action="/contact">
-    <label>Nom :</label><br>
-    <input type="text" name="name"><br><br>
-    <input type="hidden" name="nombre" value="5"><br><br>
-    <button type="submit">Envoyer</button>
-</form>
-```
-
-> L'attribut `method` définit la méthode de la requête (ici `POST`). L’attribut `action` définit la route Go vers laquelle les données seront envoyées.
+    * Exemple : 
+    ```git
+    git checkout feature/les_bases
+    ```
 
 ---
 
+## 🧰 2. Travailler sur la branche
+* 1️⃣ Ajouter ou modifier des fichiers
+	```git
+    git add . 
+    ```
+    > ajoute tous les fichiers modifiés
+    ```git
+	git commit -m "description_du_commit"
+    ```
+    > crée un commit avec les fichiers ajoutés
 
-### Composition d’une balise `<form>`
+* 2️⃣ Pousser la branche sur GitHub (⚠️ Premier push)
+    ```git
+	git push -u origin feature/nom-de-fonctionnalite
+    ```
+    > L’option -u (ou --set-upstream) lie la branche locale à la branche distante pour simplifier les futurs push / pull.
 
-* **Balise `<input>`**
+* 3️⃣ Récupérer des mises à jour si d’autres ont travaillé sur la branche
+	* Sur ta branche locale :
+    ```git
+	 git pull origin feature/nom-de-fonctionnalite
+     ```
 
-  * `type` : définit le type de saisie.
-  * `name` : définit le nom du champ envoyé.
-  * `value` : définit la valeur par défaut ou envoyée.
+	* Si des changements ont été faits sur le main :
+    ```git
+	git checkout main
+	git pull origin main
+    ```
 
-  > Le type `text` est un champ de saisie qui contiendra la valeur saisie par l'utilisateur. La valeur sera toujours une **string**.
-
-* **Balise `<button>`**
-
-  * `type="submit"` : permet d'envoyer le formulaire vers le serveur Go.
-
-#### Points importants
-
-Un formulaire envoyé en POST nécessite :
-
-* un `<input>` pour définir les données ;
-* un `<button>` pour envoyer les données.
-
----
-
-
-### Réception du formulaire par le serveur Go
-
-Après l'envoi d'un formulaire depuis le HTML, la fonction Go (`/contact`) reçoit deux paramètres :
-
-* `w` de type `http.ResponseWriter`
-* `r` de type `*http.Request`
-
-> `r` contient le formulaire envoyé par le client HTML. `w` est une interface qui permet d’écrire la réponse HTTP envoyée au HTML.
-
-#### Exemple de traitement
-
-```go
-func Contact(w http.ResponseWriter, r *http.Request) {
-    if r.Method == http.MethodPost {
-        name := r.FormValue("name")
-        nb := r.FormValue("nombre")
-        // nb sera une string, à convertir en entier si nécessaire avec strconv.Atoi()
-    }
-}
-```
-
-#### Points importants
-
-* Vérifier d'abord la méthode de la requête (GET/POST).
-* Récupérer les données du formulaire avec `r.FormValue()`.
-* La valeur récupérée est toujours une string.
+	* Puis intégrer ces changements dans ta branche :
+    ```git
+	git checkout feature/nom-de-fonctionnalite
+	git merge main    
+    ```
+    > intègre les derniers changements du main dans ta branche
 
 ---
 
+## 🔀 3. Merge de la branche vers main
+* 1️⃣ Récupérer la dernière version du main
+    ```git
+	git checkout main
+	git pull origin main
+    ```
 
-### Envoi des données du serveur Go vers le HTML
+* 2️⃣ Fusionner la branche de fonctionnalité dans main
+    ```git
+	git merge feature/nom-de-fonctionnalite
+    ```
+    > On merge toujours dans la branche sur laquelle on se trouve, ici main.
 
-Après avoir traité les données du formulaire, on peut renvoyer de nouvelles données vers le HTML.
+* 3️⃣ Résoudre les conflits si nécessaire
+	> Si des conflits apparaissent, Git te le signalera. 
+    > Il faudra alors les résoudre manuellement dans les fichiers concernés.
+	
+* 4️⃣ Commit du merge
+    ```git
+	git commit -m "Merge de feature/nom-de-fonctionnalite"
+    ```
+    > Si des conflits ont été résolus manuellement, il faut faire un commit pour finaliser la fusion.
 
-#### Préparer les données
+	* ⚠️ Git crée souvent un commit automatique s’il n’y a pas de conflit.
+        > Il peut afficher un message dans l’éditeur (type Vim) :
+        ```vim
+        Merge branch 'MenuPrincipale'								
+        # Please enter a commit message to explain why this merge is necessary, 		
+        # especially if it merges an updated upstream into a topic branch. 			
+        # Lines starting with '#' will be ignored, and an empty message aborts the commit..	
+        .git/MERGE_MSG[+] [unix] (14:59 21/10/2025)						
+        ```
 
-On peut utiliser :
+		* 📝 Modifier le nom du commit dans Vim :
 
-* **Une structure** :
+			- Appuyer sur la touche "i" pour passer en mode insertion
 
-```go
-type ContactData struct {
-    Title   string
-    Message string
-}
+			- Modifier le texte du commit dans la première ligne (souvent en orange)
 
-data := ContactData{
-    Title:   "Contact",
-    Message: "Merci " + name + " pour ton message : " + msg,
-}
-```
+			- Appuyer sur "Échap" pour sortir du mode insertion
 
-* **Une map** :
+			- Taper `:wq` (write and quit) puis appuyer sur "Entrée" pour enregistrer et quitter
 
-```go
-data := map[string]string{
-    "Title":   "Contact",
-    "Message": "Merci " + name + " pour ton message : " + msg,
-}
-```
+* 5️⃣ Pousser la branche principale mise à jour
+    ```git
+	git push origin main
+    ```
 
----
-
-
-#### Envoyer les données vers le HTML
-
-```go
-tmpl := template.Must(template.ParseFiles("template/contact.html"))
-tmpl.Execute(w, data)
-return // On termine ici pour ne pas exécuter la partie GET
-```
-
----
-    
-
-### Réception des données dans le HTML
-
-Pour afficher les données envoyées depuis Go :
-
-```html
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ .Title }}</title>
-</head>
-<body>
-    <h1>{{ .Title }}</h1>
-    <p>{{ .Message }}</p>
-</body>
-</html>
-```
-
-> `{{ .Title }}` et `{{ .Message }}` affichent le contenu des variables Go *Title* et *Message*.
+* 6️⃣ Supprimer la branche une fois merge
+	* Localement:
+    ```git
+	git branch -d feature/nom-de-fonctionnalite
+    ```
+	* Sur GitHub (dépôt distant) :
+    ```git
+	git push origin --delete feature/nom-de-fonctionnalite
+    ```
 
 ---
-
-
-### Utilisation des balises Go dans le HTML
-
-```html
-{{if eq .Nb_visiteurs 5}}
-    <p>Il y a 5 visiteurs sur le site !</p>
-{{end}}
-```
-
-> Ici la balise `{{if ...}}` vérifie si la variable Go `Nb_visiteurs` est égale à 5. Si c’est le cas, le paragraphe est affiché.
-
----
-
-
-#### Balises Go utiles
-
-* `{{if CONDITION}} ... {{end}}` : condition simple
-* `{{if CONDITION}} ... {{else}} ... {{end}}` : condition avec sinon
-* `{{range VARIABLE}} ... {{end}}` : boucle sur une liste/array
-
-#### Opérateurs logiques (à utiliser avec les conditions)
-
-* `eq` : égal à
-* `ne` : différent de
-* `lt` : inférieur à
-* `gt` : supérieur à
-* `le` : inférieur ou égal à
-* `ge` : supérieur ou égal à
-
-#### Affichage de variables
-
-* `{{.VARIABLE}}` : affiche la valeur d'une variable Go
-
----
-
-
-## Exemple complet de fonction Go gérant un formulaire de contact
-
-```go
-package controller
-
-import (
-    "html/template"
-    "net/http"
-)
-
-func Contact(w http.ResponseWriter, r *http.Request) {
-    if r.Method == http.MethodPost { // Si le formulaire est soumis en POST
-        name := r.FormValue("name")// Récupère le champ "name"
-		msg := r.FormValue("msg")   // Récupère le champ "msg"
-
-        data := map[string]string{
-            "Title":   "Contact",
-            "Message": "Merci " + name + " pour ton message : " + msg, // Message personnalisé après soumission
-        }
-        tmpl := template.Must(template.ParseFiles("template/contact.html"))
-        tmpl.Execute(w, data)
-        return // On termine ici pour ne pas exécuter la partie GET
-    }
-    // Si ce n'est pas un POST, on affiche simplement le formulaire
-    data := map[string]string{
-        "Title":   "Contact",
-        "Message": "Envoie-nous un message 📩",
-    }
-    tmpl := template.Must(template.ParseFiles("template/contact.html"))
-    tmpl.Execute(w, data)
-}
-```
-## Exemple complet de page HTML sous serveur Go
-
-```html
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ .Title }}</title>
-</head>
-<body>
-    <h1>{{ .Title }}</h1>
-    <p>{{ .Message }}</p>
-
-    <form method="post" action="/contact">
-        <label>Nom :</label><br>
-        <input type="text" name="name"><br><br>
-        <label>Message :</label><br>
-        <textarea name="msg"></textarea><br><br>
-        <button type="submit">Envoyer</button>
-    </form>
-</body>
-</html>
-```
----
-
 
 ## Conclusion
 
-Nous avons vu comment envoyer des données depuis un serveur Go vers une page HTML, comment utiliser ces données dans le HTML avec les balises Go, et comment gérer les conditions et boucles pour afficher dynamiquement le contenu.
+Ce workflow Git permet de gérer efficacement le développement de nouvelles fonctionnalités en utilisant des branches. En suivant ces étapes, tu peux travailler de manière collaborative tout en maintenant une base de code propre et organisée.
+
+✅ Fin du Workflow
 
 ---
-
