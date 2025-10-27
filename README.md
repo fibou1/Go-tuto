@@ -1,6 +1,9 @@
 # Les liens entre Go et le HTML
+> Proposé par Emrick Rivet - B1 info - Octobre 2025
 
-Le HTML peut contenir des **balises spéciales Go** que l’on peut utiliser directement dans le code HTML.
+---
+
+Le HTML peut contenir des **balises spéciales Go** que l’on peut utiliser directement dans son code.
 
 Ces balises sont entourées de doubles accolades : `{{ }}`.
 
