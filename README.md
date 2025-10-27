@@ -275,6 +275,9 @@ Pour afficher les données envoyées depuis Go :
 * `gt` : supérieur à
 * `le` : inférieur ou égal à
 * `ge` : supérieur ou égal à
+
+#### Affichage de variables
+
 * `{{.VARIABLE}}` : affiche la valeur d'une variable Go
 
 ---
@@ -311,9 +314,30 @@ func Contact(w http.ResponseWriter, r *http.Request) {
     tmpl := template.Must(template.ParseFiles("template/contact.html"))
     tmpl.Execute(w, data)
 }
-
 ```
+## Exemple complet de page HTML sous serveur Go
 
+```html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ .Title }}</title>
+</head>
+<body>
+    <h1>{{ .Title }}</h1>
+    <p>{{ .Message }}</p>
+
+    <form method="post" action="/contact">
+        <label>Nom :</label><br>
+        <input type="text" name="name"><br><br>
+        <label>Message :</label><br>
+        <textarea name="msg"></textarea><br><br>
+        <button type="submit">Envoyer</button>
+    </form>
+</body>
+</html>
+```
 ---
 
 
