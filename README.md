@@ -57,6 +57,7 @@ import (
 	"controller"
 )
 
+// New crée et retourne un nouvel objet ServeMux configuré avec les routes de l'application
 func New() *http.ServeMux {
 	mux := http.NewServeMux()
 
@@ -125,7 +126,7 @@ Exemple de formulaire HTML :
 ---
 
 
-#### Composition d’une balise `<form>`
+### Composition d’une balise `<form>`
 
 * **Balise `<input>`**
 
@@ -242,7 +243,7 @@ Pour afficher les données envoyées depuis Go :
 </html>
 ```
 
-> `{{ .Title }}` et `{{ .Message }}` affichent le contenu des variables Go.
+> `{{ .Title }}` et `{{ .Message }}` affichent le contenu des variables Go *Title* et *Message*.
 
 ---
 
@@ -255,6 +256,8 @@ Pour afficher les données envoyées depuis Go :
 {{end}}
 ```
 
+> Ici la balise `{{if ...}}` vérifie si la variable Go `Nb_visiteurs` est égale à 5. Si c’est le cas, le paragraphe est affiché.
+
 ---
 
 
@@ -264,7 +267,7 @@ Pour afficher les données envoyées depuis Go :
 * `{{if CONDITION}} ... {{else}} ... {{end}}` : condition avec sinon
 * `{{range VARIABLE}} ... {{end}}` : boucle sur une liste/array
 
-#### Opérateurs logiques
+#### Opérateurs logiques (à utiliser avec les conditions)
 
 * `eq` : égal à
 * `ne` : différent de
@@ -288,19 +291,19 @@ import (
 )
 
 func Contact(w http.ResponseWriter, r *http.Request) {
-    if r.Method == http.MethodPost {
-        name := r.FormValue("name")
-        msg := r.FormValue("msg")
+    if r.Method == http.MethodPost { // Si le formulaire est soumis en POST
+        name := r.FormValue("name")// Récupère le champ "name"
+		msg := r.FormValue("msg")   // Récupère le champ "msg"
 
         data := map[string]string{
             "Title":   "Contact",
-            "Message": "Merci " + name + " pour ton message : " + msg,
+            "Message": "Merci " + name + " pour ton message : " + msg, // Message personnalisé après soumission
         }
         tmpl := template.Must(template.ParseFiles("template/contact.html"))
         tmpl.Execute(w, data)
-        return
+        return // On termine ici pour ne pas exécuter la partie GET
     }
-
+    // Si ce n'est pas un POST, on affiche simplement le formulaire
     data := map[string]string{
         "Title":   "Contact",
         "Message": "Envoie-nous un message 📩",
@@ -308,6 +311,7 @@ func Contact(w http.ResponseWriter, r *http.Request) {
     tmpl := template.Must(template.ParseFiles("template/contact.html"))
     tmpl.Execute(w, data)
 }
+
 ```
 
 ---
