@@ -140,8 +140,16 @@ git pull origin main
 ```git
 git merge feature/nom-de-fonctionnalité
 ```
-
+> Ici on merge la branche avec un commit unique de fusion.
 > On merge toujours dans la branche sur laquelle on se trouve, ici `main`.
+
+
+```git
+git rebase feature/nom-de-fonctionnalité
+```
+> Ici on rebase la branche en inculant les commits de la branche un par un au lieu d'un commit unique.
+> On rebase toujours dans la branche sur laquelle on se trouve, ici `main`.
+
 
 * 3️⃣ Résoudre les conflits si nécessaire :
 
