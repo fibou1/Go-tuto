@@ -17,7 +17,6 @@ Chaque branche contient une partie différente du contenu éducatif (TP, cours, 
 2. Sélectionnez la branche correspondant au sujet qui vous intéresse :
    - <code>etape_1</code> → Projet Quiz Console 🎮  
    - <code>les_base</code> → Bases du langage Go + exercices 💻  
-   - <code>struct</code> → Les structures et fonctions ⚙️  
    - <code>tp_progressifs</code> → Exercices pas à pas 🧩  
    - <code>bonnes_pratiques</code> → Conseils avant de coder 🚀  
 
