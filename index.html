@@ -3931,6 +3931,137 @@
     <!-- 04.2 -->
     <div class="notion">
       <div class="notion-head"><span class="badge">04.2</span>
+        <h3>Les tableaux (arrays) : des cases numérotées, en nombre fixe</h3>
+      </div>
+      <div class="pourquoi">
+        <span class="label">Le problème de la vraie vie</span>
+        <p>Un casier de piscine numéroté : le nombre de casiers est décidé une fois pour toutes à la construction du bâtiment - tu ne peux pas en ajouter un 51e si le mur en contient 50. Un <b style="color:var(--text-primary)">tableau (array)</b> en Go, c'est exactement ça : une suite de cases <b style="color:var(--text-primary)">numérotées</b>, dont le nombre est <b style="color:var(--text-primary)">fixé pour toujours</b> dès que tu l'écris - il fait partie du type lui-même, pas juste une info à côté.</p>
+        <p>C'est la brique la plus simple pour ranger plusieurs valeurs. Tu verras au module 05.2 la <code>slice</code>, qui ressemble à un tableau mais peut grandir - retiens bien la différence : tableau = taille gravée dans le marbre, slice = sac extensible.</p>
+      </div>
+
+      <div class="diagram">
+        <svg viewBox="0 0 640 170" role="img" aria-label="Schéma d'un tableau à taille fixe avec ses index">
+          <g font-family="Montserrat, sans-serif">
+            <text x="20" y="24" font-size="11" fill="#8a9195" font-family="JetBrains Mono, monospace">var notes [3]int</text>
+            <rect x="20" y="34" width="90" height="60" fill="#187b73"/>
+            <text x="65" y="70" text-anchor="middle" font-size="16" fill="#fff" font-family="JetBrains Mono, monospace">0</text>
+            <rect x="112" y="34" width="90" height="60" fill="#187b73"/>
+            <text x="157" y="70" text-anchor="middle" font-size="16" fill="#fff" font-family="JetBrains Mono, monospace">0</text>
+            <rect x="204" y="34" width="90" height="60" fill="#187b73"/>
+            <text x="249" y="70" text-anchor="middle" font-size="16" fill="#fff" font-family="JetBrains Mono, monospace">0</text>
+            <text x="65" y="110" text-anchor="middle" font-size="11" fill="#8a9195" font-family="JetBrains Mono, monospace">notes[0]</text>
+            <text x="157" y="110" text-anchor="middle" font-size="11" fill="#8a9195" font-family="JetBrains Mono, monospace">notes[1]</text>
+            <text x="249" y="110" text-anchor="middle" font-size="11" fill="#8a9195" font-family="JetBrains Mono, monospace">notes[2]</text>
+
+            <rect x="296" y="34" width="90" height="60" fill="none" stroke="#b42318" stroke-width="2" stroke-dasharray="6,4"/>
+            <text x="341" y="70" text-anchor="middle" font-size="20" fill="#b42318">✕</text>
+            <text x="341" y="110" text-anchor="middle" font-size="10" fill="#b42318" font-family="JetBrains Mono, monospace">n'existe pas</text>
+
+            <text x="480" y="60" font-size="12" fill="#0b4a45" font-weight="700">[3]int = exactement</text>
+            <text x="480" y="78" font-size="12" fill="#0b4a45" font-weight="700">3 cases, jamais plus,</text>
+            <text x="480" y="96" font-size="12" fill="#0b4a45" font-weight="700">jamais moins</text>
+          </g>
+        </svg>
+      </div>
+      <div class="diagram-caption">3 cases numérotées de 0 à 2 - la case "3" n'a jamais existé, même si "3" apparaît dans le type.</div>
+
+      <div class="decorticage">
+        <span class="label">Décorticage mot par mot</span>
+        <div class="decorticage-code">var notes [3]int
+notes[0] = 12
+notes[1] = 15
+fmt.Println(notes[0])</div>
+        <ul class="decorticage-list">
+          <li><span class="kw">[3]int</span><span class="def">"Un tableau de EXACTEMENT 3 cases, chacune contenant un int" - le nombre <code>3</code> fait partie du <b>type</b> : <code>[3]int</code> et <code>[4]int</code> sont deux types différents, pas la même chose avec une case en plus.</span></li>
+          <li><span class="kw">notes[0]</span><span class="def">Accès à la case d'index 0 - Go compte à partir de <b>0</b>, pas de 1. Pour un tableau de 3 cases, les index valides sont 0, 1 et 2 - jamais 3.</span></li>
+          <li><span class="kw">notes[0] = 12</span><span class="def">Écrit 12 dans la première case. Contrairement à une string (voir plus bas), une case de tableau se réécrit librement.</span></li>
+        </ul>
+      </div>
+
+      <div class="exemples-label">Exemples progressifs</div>
+
+      <div class="exemple">
+        <span class="exemple-tag simple">1 · le plus simple</span>
+        <p>Un tableau non initialisé n'est jamais "vide" en Go - il est rempli de la valeur zéro du type (0 pour int) :</p>
+        <div class="code">var scores [3]int
+scores[0] = 7
+fmt.Println(scores)</div>
+        <div class="simu-player"><script type="application/json">
+[{"code":"var scores [3]int","desc":"Go réserve 3 cases et les remplit avec la valeur zéro d'un int : 0.","mem":{"scores":"[0, 0, 0]"},"out":""},
+{"code":"scores[0] = 7","desc":"Seule la case d'index 0 change.","mem":{"scores":"[7, 0, 0]"},"out":""},
+{"code":"fmt.Println(scores)","desc":"Go affiche un tableau entre crochets, valeurs séparées par des espaces.","mem":{"scores":"[7, 0, 0]"},"out":"[7 0 0]"}]
+</script></div>
+      </div>
+
+      <div class="exemple">
+        <span class="exemple-tag concret">2 · cas concret</span>
+        <p>3 contrôles dans l'année : un nombre fixe et connu à l'avance - le cas d'usage idéal pour un tableau plutôt qu'une slice :</p>
+        <div class="code">notes := [3]int{12, 15, 8}
+total := 0
+for i := 0; i < len(notes); i++ {
+    total = total + notes[i]
+}
+fmt.Println("Total :", total)</div>
+        <div class="simu-player"><script type="application/json">
+[{"code":"notes := [3]int{12, 15, 8}","desc":"Littéral de tableau : les 3 valeurs remplissent les 3 cases dans l'ordre.","mem":{"notes":"[12, 15, 8]","total":0},"out":""},
+{"code":"i := 0 ; total += notes[0]","desc":"len(notes) vaut 3 ; premier tour, on additionne la case 0.","mem":{"i":0,"total":12},"out":""},
+{"code":"i := 1 ; total += notes[1]","desc":"Deuxième tour, case 1.","mem":{"i":1,"total":27},"out":""},
+{"code":"i := 2 ; total += notes[2]","desc":"Troisième tour, case 2 - dernière case valide.","mem":{"i":2,"total":35},"out":""},
+{"code":"i := 3 ; 3 < len(notes) ? non → sortie","desc":"3 < 3 est faux, la boucle s'arrête avant de tenter notes[3] (qui n'existe pas).","mem":{"total":35},"out":"Total : 35"}]
+</script></div>
+      </div>
+
+      <div class="exemple">
+        <span class="exemple-tag limite">3 · cas limite</span>
+        <p>Accéder à un index en dehors du tableau :</p>
+        <div class="code">notes := [3]int{12, 15, 8}
+fmt.Println(notes[3])   <span class="c">// panic: runtime error: index out of range [3] with length 3</span></div>
+        <div class="piege" style="margin-top:0.8rem;">
+          <span class="label">Piège classique</span>
+          <p>Confondre "un tableau de 3 cases" avec "les index vont de 1 à 3". En Go (et dans la quasi-totalité des langages), un tableau de taille N a des index valides de <b>0 à N-1</b>. <code>notes[3]</code> sur un tableau de 3 cases est TOUJOURS invalide, aucune exception.</p>
+        </div>
+      </div>
+
+      <div class="piege">
+        <span class="label">Piège classique - une string n'est PAS un tableau</span>
+        <p>On pourrait croire qu'une <code>string</code> est juste "un tableau de caractères" comme dans d'autres langages. En Go, ce n'est pas le cas : une string est une suite <b style="color:var(--text-primary)">immuable</b> d'octets (pas de caractères). Conséquences concrètes :</p>
+        <div class="code" style="margin-top:0.6rem;">mot := "café"
+fmt.Println(mot[0])     <span class="c">// 99 : un OCTET (le code de 'c'), pas "c"</span>
+mot[0] = 'C'             <span class="c">// ERREUR : cannot assign to mot[0] (strings immuables)</span></div>
+        <p style="margin-top:0.6rem;">Rappelle-toi aussi le module 05.1 : <code>len("café")</code> vaut 5, pas 4, car "é" prend 2 octets - encore une preuve qu'une string se comporte différemment d'un tableau de lettres. Pour manipuler du texte lettre par lettre, on convertit en <code>[]rune</code> (vu en 05.1), jamais en indexant la string directement.</p>
+      </div>
+
+      <div class="sandbox">
+        <div class="sandbox-head"><span class="tag">Bac à sable</span><span class="hint">change les valeurs ou l'index, observe le résultat</span></div>
+        <div class="sandbox-editor" contenteditable="true" spellcheck="false">notes := [3]int{12, 15, 8}
+total := 0
+for i := 0; i < len(notes); i++ {
+    total = total + notes[i]
+}
+fmt.Println("Total :", total)
+fmt.Println("Deuxième note :", notes[1])</div>
+        <div class="sandbox-actions">
+          <button class="run-btn">▶ Exécuter</button>
+          <button class="reset-btn">↺ Réinitialiser</button>
+        </div>
+        <div class="sandbox-output empty"></div>
+      </div>
+
+      <div class="quiz" data-answer="C" data-explain="La taille d'un tableau [3]int fait partie de son type : il est physiquement impossible de lui ajouter une case, contrairement à une slice où append() fonctionne car une NOUVELLE slice, plus grande, est créée en arrière-plan.">
+        <div class="qtag">Quiz éclair</div>
+        <p class="quiz-q">notes est un [3]int déjà rempli. Que se passe-t-il si tu essaies notes = append(notes, 20) ?</p>
+        <div class="quiz-options">
+          <button data-choice="A">Ça fonctionne, notes a maintenant 4 cases</button>
+          <button data-choice="B">Ça fonctionne mais silencieusement rien ne change</button>
+          <button data-choice="C">Erreur de compilation : append ne s'applique pas à un tableau, seulement à une slice</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </div>
+
+    <!-- 04.3 -->
+    <div class="notion">
+      <div class="notion-head"><span class="badge">04.3</span>
         <h3>Variable, Slice, Map ou Struct ?</h3>
       </div>
       <div class="pourquoi">
@@ -3970,9 +4101,9 @@
       </div>
     </div>
 
-    <!-- 04.3 -->
+    <!-- 04.4 -->
     <div class="notion">
-      <div class="notion-head"><span class="badge">04.3</span>
+      <div class="notion-head"><span class="badge">04.4</span>
         <h3>Patron : Menu interactif (for + switch)</h3>
       </div>
       <div class="pourquoi">
@@ -3993,9 +4124,9 @@
         }</div>
     </div>
 
-    <!-- 04.4 -->
+    <!-- 04.5 -->
     <div class="notion">
-      <div class="notion-head"><span class="badge">04.4</span>
+      <div class="notion-head"><span class="badge">04.5</span>
         <h3>Patron : Recherche / Filtrage (for + if)</h3>
       </div>
       <div class="pourquoi">
@@ -4011,9 +4142,9 @@
         }</div>
     </div>
 
-    <!-- 04.5 -->
+    <!-- 04.6 -->
     <div class="notion">
-      <div class="notion-head"><span class="badge">04.5</span>
+      <div class="notion-head"><span class="badge">04.6</span>
         <h3>Patron : Validation de saisie (for + Scan + if)</h3>
       </div>
       <div class="pourquoi">
@@ -5078,6 +5209,28 @@
         // cast float64(x) / string(x) - on ignore le cast, on garde la valeur numérique
         let m = expr.match(/^float64\((.+)\)$/);
         if (m) return this.evalExpr(m[1], vars);
+        // indexation d'un tableau : ident[expr]
+        m = expr.match(/^([A-Za-z_]\w*)\[(.+)\]$/);
+        if (m && Object.prototype.hasOwnProperty.call(vars, m[1])) {
+          const base = vars[m[1]];
+          const idx = this.evalExpr(m[2], vars);
+          if (Array.isArray(base)) {
+            if (idx < 0 || idx >= base.length) throw new Error(`panic: runtime error: index out of range [${idx}] with length ${base.length}`);
+            return base[idx];
+          }
+          throw new Error('indexation impossible sur ' + m[1]);
+        }
+        // len(tableau) ou len(string)
+        m = expr.match(/^len\((.+)\)$/);
+        if (m) {
+          const v = this.evalExpr(m[1], vars);
+          if (Array.isArray(v)) return v.length;
+          if (typeof v === 'string') return v.length;
+          return 0;
+        }
+        // littéral tableau : [3]int{12, 15, 8}  ou  [...]int{12, 15, 8}
+        m = expr.match(/^\[(?:\d+|\.\.\.)\]\w+\{(.*)\}$/);
+        if (m) return m[1].trim() ? this.splitArgs(m[1]).map(a => this.evalExpr(a, vars)) : [];
         // comparaison booléenne simple (utilisée dans les conditions)
         const cmp = expr.match(/^(.+?)\s*(==|!=|>=|<=|>|<)\s*(.+)$/);
         if (cmp) {
@@ -5166,6 +5319,24 @@
           const line = lines[i];
           if (line === '}' || line === '{') {i++; continue;}
           let m;
+          // for i := init; cond; step {   (boucle comptée, forme la plus fréquente)
+          if ((m = line.match(/^for\s+(\w+)\s*:=\s*(.+?);\s*(.+?);\s*(.+?)\s*\{$/))) {
+            const [, iv, initExpr, condExpr, stepExpr] = m;
+            vars[iv] = this.evalExpr(initExpr, vars);
+            let depth = 1, j = i + 1; const body = [];
+            while (j < end && depth > 0) {
+              if (lines[j] === '}') {depth--; if (depth === 0) break;}
+              else if (/\{\s*$/.test(lines[j])) {depth++;}
+              body.push(lines[j]); j++;
+            }
+            let guard = 0;
+            while (this.evalExpr(condExpr, vars) && guard++ < 10000) {
+              this.execBlock(body, 0, body.length, vars, out);
+              this.execLine(stepExpr, vars, out);
+            }
+            i = j + 1;
+            continue;
+          }
           // if cond {   → ouvre un bloc, on cherche sa fermeture (et un else éventuel)
           if ((m = line.match(/^if\s+(.+?)\s*\{$/))) {
             const cond = this.evalExpr(m[1], vars);
@@ -5206,7 +5377,7 @@
         // fmt.Println(a, "txt", b)
         if ((m = line.match(/^fmt\.Println\((.*)\)$/))) {
           const args = this.splitArgs(m[1]).map(a => this.evalExpr(a, vars));
-          out.push(args.join(' '));
+          out.push(args.map(a => Array.isArray(a) ? '[' + a.join(' ') + ']' : String(a)).join(' '));
           return;
         }
         // fmt.Printf("...", a, b)
@@ -5216,6 +5387,11 @@
           let idx = 0;
           const filled = fmtStr.replace(/%\.?\d*[sdf]/g, () => String(this.evalExpr(args[idx++], vars)));
           out.push(filled);
+          return;
+        }
+        // déclaration var x [N]type  (tableau non initialisé = rempli de zéros, comme en vrai Go)
+        if ((m = line.match(/^var\s+(\w+)\s+\[(\d+)\]\w+$/))) {
+          vars[m[1]] = new Array(parseInt(m[2], 10)).fill(0);
           return;
         }
         // déclaration var x type = valeur  |  var x type
@@ -5228,10 +5404,22 @@
           vars[m[1]] = this.evalExpr(m[2], vars);
           return;
         }
+        // i++ / i--  (pas de boucle for sans ça)
+        if ((m = line.match(/^(\w+)\+\+$/))) {vars[m[1]]++; return;}
+        if ((m = line.match(/^(\w+)--$/))) {vars[m[1]]--; return;}
         // x += / -=
         if ((m = line.match(/^(\w+)\s*(\+=|-=)\s*(.+)$/))) {
           const v = this.evalExpr(m[3], vars);
           vars[m[1]] = m[2] === '+=' ? vars[m[1]] + v : vars[m[1]] - v;
+          return;
+        }
+        // tableau[index] = valeur
+        if ((m = line.match(/^([A-Za-z_]\w*)\[(.+)\]\s*=\s*(.+)$/))) {
+          const idx = this.evalExpr(m[2], vars);
+          const val = this.evalExpr(m[3], vars);
+          if (!Array.isArray(vars[m[1]])) throw new Error(m[1] + " n'est pas un tableau");
+          if (idx < 0 || idx >= vars[m[1]].length) throw new Error(`panic: runtime error: index out of range [${idx}] with length ${vars[m[1]].length}`);
+          vars[m[1]][idx] = val;
           return;
         }
         // x = valeur
